@@ -2,10 +2,10 @@ from django.urls import path
 
 from cart import views
 
-app_name = 'card'
+app_name = 'cart'
 urlpatterns = [
-    path('', views.card_summary, name='card_summary'),
-    path('add/', views.card_add, name='card_add'),
-    path('delete/', views.card_delete, name='card_delete'),
-    path('update/', views.card_update, name='card_update'),
+    path('', views.cart_summary, name='cart_summary'),
+    path('add/', views.cart_add, name='cart_add'),
+    path('delete/', views.cart_delete, name='cart_delete'),
+    path('update/', views.cart_update, name='cart_update'),
 ]

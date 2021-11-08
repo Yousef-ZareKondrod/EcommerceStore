@@ -1,7 +1,7 @@
-from cart.card import Card
+from cart.cart import Cart
 
 
-def card(request):
+def cart(request):
     return {
-        'card': Card(request)
+        'cart': Cart(request)
     }

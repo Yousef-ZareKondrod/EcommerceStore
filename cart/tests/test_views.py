@@ -5,7 +5,7 @@ from django.urls import reverse
 from product.models import Category, Product
 
 
-class TestCardView(TestCase):
+class TestCartView(TestCase):
     def setUp(self) -> None:
         Category.objects.create(name='django', slug='django')
         User.objects.create(username='yousef.zare2000')
@@ -17,52 +17,52 @@ class TestCardView(TestCase):
                                slug='django3', price='20000', image='django')
 
         self.client.post(
-            reverse('card:card_add'), {'productid': 1, 'productqty': 1, 'action': 'post'}, xhr=True
+            reverse('cart:cart_add'), {'productid': 1, 'productqty': 1, 'action': 'post'}, xhr=True
         )
         self.client.post(
-            reverse('card:card_add'), {'productid': 2, 'productqty': 2, 'action': 'post'}, xhr=True
+            reverse('cart:cart_add'), {'productid': 2, 'productqty': 2, 'action': 'post'}, xhr=True
         )
 
-    def test_card_url(self):
+    def test_cart_url(self):
         """
         Testing homepage response status
         :return:
         """
-        response = self.client.get(reverse('card:card_summary'))
+        response = self.client.get(reverse('cart:cart_summary'))
         self.assertEqual(response.status_code, 200)
 
-    def test_card_add(self):
+    def test_cart_add(self):
         """
-        Testing adding items to the card
+        Testing adding items to the cart
         :param self:
         :return:
         """
 
         response = self.client.post(
-            reverse('card:card_add'), {'productid': 3, 'productqty': 1, 'action': 'post'}, xhr=True
+            reverse('cart:cart_add'), {'productid': 3, 'productqty': 1, 'action': 'post'}, xhr=True
         )
         self.assertEqual(response.json(), {'qty': 4})
         response = self.client.post(
-            reverse('card:card_add'), {'productid': 2, 'productqty': 1, 'action': 'post'}, xhr=True
+            reverse('cart:cart_add'), {'productid': 2, 'productqty': 1, 'action': 'post'}, xhr=True
         )
         self.assertEqual(response.json(), {'qty': 3})
 
-    def test_card_delete(self):
+    def test_cart_delete(self):
         """
-        Testing deleting item from the card
+        Testing deleting item from the cart
         :return:
         """
         response = self.client.post(
-            reverse('card:card_delete'), {'productid': 2, 'action': 'post'}, xhr=True
+            reverse('cart:cart_delete'), {'productid': 2, 'action': 'post'}, xhr=True
         )
         self.assertEqual(response.json(), {'qty': 1, 'subtotal': 20000})
 
-    def test_card_update(self):
+    def test_cart_update(self):
         """
-        Testing updating item from the card
+        Testing updating item from the cart
         :return:
         """
         response = self.client.post(
-            reverse('card:card_update'), {'productid': 2, 'productqty': 1, 'action': 'post'}, xhr=True
+            reverse('cart:cart_update'), {'productid': 2, 'productqty': 1, 'action': 'post'}, xhr=True
         )
         self.assertEqual(response.json(), {'qty': 2, 'subtotal': 40000})

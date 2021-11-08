@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 
-from card.card import Card
+from cart.cart import Cart
 from order.models import Order, OrderItem
 
 # from suds.client import Client
@@ -13,22 +13,22 @@ from order.models import Order, OrderItem
 
 
 @login_required
-def CardView(request):
+def CartView(request):
     global orderitem
-    card = Card(request)
-    total = str(card.get_total_price())
-    cardtotal = card.get_total_price()
-    card = card.session.get('session_key')
+    cart = Cart(request)
+    total = str(cart.get_total_price())
+    carttotal = cart.get_total_price()
+    cart = cart.session.get('session_key')
 
     user_id = request.user.id
 
 
     order = Order.objects.create(user_id=user_id, full_name='name', address1='add1',
-                                 address2='add2', total_paid=cardtotal, order_key='', billing_status=True)
+                                 address2='add2', total_paid=carttotal, order_key='', billing_status=True)
     order_id = order.pk
-    for item in card:
-        orderitem = OrderItem.objects.create(order_id=order_id, product_id=item, price=card[item]['price'],
-                                             quantity=card[item]['qty'])
+    for item in cart:
+        orderitem = OrderItem.objects.create(order_id=order_id, product_id=item, price=cart[item]['price'],
+                                             quantity=cart[item]['qty'])
     if order.pk and orderitem.pk:
         order_placed(request)
         return render(request, 'store/payment/orderplaced.html')
@@ -76,8 +76,8 @@ def CardView(request):
 
 
 def order_placed(request):
-    card = Card(request)
-    card.clear()
+    cart = Cart(request)
+    cart.clear()
     return render(request, 'store/payment/orderplaced.html')
 
 
