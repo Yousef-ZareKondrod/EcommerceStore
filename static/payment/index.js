@@ -14,17 +14,17 @@
 // };
 //
 //
-// var card = elements.create("card", { style: style });
-// card.mount("#card-element");
+// var cart = elements.create("cart", { style: style });
+// cart.mount("#cart-element");
 //
-// card.on('change', function(event) {
-// var displayError = document.getElementById('card-errors')
+// cart.on('change', function(event) {
+// var displayError = document.getElementById('cart-errors')
 // if (event.error) {
 //   displayError.textContent = event.error.message;
-//   $('#card-errors').addClass('alert alert-info');
+//   $('#cart-errors').addClass('alert alert-info');
 // } else {
 //   displayError.textContent = '';
-//   $('#card-errors').removeClass('alert alert-info');
+//   $('#cart-errors').removeClass('alert alert-info');
 // }
 // });
 //
@@ -52,7 +52,7 @@ var postCode = document.getElementById("postCode").value;
     //
     //   stripe.confirmCardPayment(clientsecret, {
     //     payment_method: {
-    //       card: card,
+    //       cart: cart,
     //       billing_details: {
     //         address:{
     //             line1:custAdd,

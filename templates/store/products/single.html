@@ -41,7 +41,7 @@
                     </div>
             </div>
             <hr>
-            <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">{% translate "Add to card" %}</button>
+            <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">{% translate "Add to cart" %}</button>
             <button type="button" id="add-button" value="{{product.id}}" class="btn btn-light fw500">{% translate "Add to Favorites" %}</button>
             </div>
         </div>
@@ -50,10 +50,10 @@
 
 
 
-            <div class="card mb-3 border-0">
+            <div class="cart mb-3 border-0">
             <div class="row g-0">
                 <div class="col-md-12">
-                    <div class="card-body p-1">
+                    <div class="cart-body p-1">
                         <h1 class="mb-0 h2 pe-4 pb-4">{{ product.title }}</h1>
                         <div class="bg-light"><img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}"> </div>
                     </div>
@@ -75,7 +75,7 @@
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '{% url "card:card_add" %}',
+            url: '{% url "cart:cart_add" %}',
             data: {
                 productid: $('#add-button').val(),
                 productqty: $('#select option:selected').text(),
@@ -83,7 +83,7 @@
                 action: 'post'
             },
             success: function (json) {
-               document.getElementById("card-qty").innerHTML = json.qty
+               document.getElementById("cart-qty").innerHTML = json.qty
             },
             error: function (xhr, errmsg, err) {}
         });

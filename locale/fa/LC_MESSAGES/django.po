@@ -356,7 +356,7 @@ msgid "Card"
 msgstr "سبد خرید"
 
 #: .\templates\store\card\summary.html:5
-msgid "card summery"
+msgid "cart summery"
 msgstr "خلاصه سبد خرید"
 
 #: .\templates\store\card\summary.html:13
@@ -522,7 +522,7 @@ msgid "Qty"
 msgstr "تعداد"
 
 #: .\templates\store\products\single.html:44
-msgid "Add to card"
+msgid "Add to cart"
 msgstr "اضافه به سبد خرید"
 
 #: .\templates\store\products\single.html:45

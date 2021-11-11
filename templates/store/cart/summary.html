@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block title %}
-    {% translate "card summery" %}
+    {% translate "cart summery" %}
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
     <main class="pt-5">
         <div class="container" style="max-width: 1000px">
             <div class="col-12">
-                <h1 class="h2">{% translate "Your Card" %}</h1>
+                <h1 class="h2">{% translate "Your Cart" %}</h1>
             </div>
             <div class="col-12">
                 <p><b>{% translate "Manage your items in your basket" %}</b></p>
@@ -43,7 +43,7 @@
                     <div class="text-end">
 
                         <div class="">{% translate "Sub Total" %}: <span class="fw-bold"></span>
-                            <div id="subtotal" class="d-inline-flex fw-bold">{{ card.get_subtotal_price }}
+                            <div id="subtotal" class="d-inline-flex fw-bold">{{ cart.get_subtotal_price }}
                                 ({% translate "Toman" %})
                             </div>
                         </div>
@@ -52,33 +52,33 @@
                         </div>
                         <div class="pt-2">{% translate "Total to pay" %}: <span class="fw-bold h5"></span><span
                                 id="total"
-                                class="fw-bold h5">{{ card.get_total_price }} ({% translate "Toman" %})</span></div>
+                                class="fw-bold h5">{{ cart.get_total_price }} ({% translate "Toman" %})</span></div>
 
                     </div>
                 </div>
                 <div class="col-md-5 col-lg-4 order-md-last p-0 order-3">
                     <div class="d-grid gap-2 ">
-                        <a role="button" href="{% url 'payment:Card' %}" class="btn btn-success fw-bold"
+                        <a role="button" href="{% url 'payment:Cart' %}" class="btn btn-success fw-bold"
                            type="button">{% translate "Checkout" %}</a>
                         <button class="btn btn-light" type="button">{% translate "Save for later" %}</button>
                     </div>
                 </div>
                 <div class="col-md-7 col-lg-8 p-0">
 
-                    {% for item in card %}
+                    {% for item in cart %}
                         {% with product=item.product %}
 
-                            <div class="card mb-3 border-0 product-item" data-index="{{ product.id }}">
+                            <div class="cart mb-3 border-0 product-item" data-index="{{ product.id }}">
                                 <div class="row g-0">
                                     <div class="col-md-2 d-none d-md-block">
                                         <img class="img-fluid mx-auto d-block" alt="Responsive image"
                                              src="{{ product.image.url }}"/>
                                     </div>
                                     <div class="col-md-10 ps-md-3">
-                                        <div class="card-body p-1">
+                                        <div class="cart-body p-1">
                                             <a class="text-decoration-none text-reset"
                                                href="{{ item.product.get_absolute_url }}">
-                                                <p class="card-text pb-3">{{ product.title }}</p>
+                                                <p class="cart-text pb-3">{{ product.title }}</p>
                                             </a>
                                             <label for="select">Qty</label>
                                             <select id="select{{ product.id }}" style="width:50px;height:31px;">
@@ -111,7 +111,7 @@
             var prodid = $(this).data('index');
             $.ajax({
                 type: 'POST',
-                url: '{% url "card:card_delete" %}',
+                url: '{% url "cart:cart_delete" %}',
                 data: {
                     productid: $(this).data('index'),
                     csrfmiddlewaretoken: "{{csrf_token}}",
@@ -120,7 +120,7 @@
                 success: function (json) {
                     $('.product-item[data-index="' + prodid + '"]').remove();
                     document.getElementById("subtotal").innerHTML = json.subtotal;
-                    document.getElementById("card-qty").innerHTML = json.qty
+                    document.getElementById("cart-qty").innerHTML = json.qty
                 },
                 error: function (xhr, errmsg, err) {
                 }
@@ -133,7 +133,7 @@
             var prodid = $(this).data('index');
             $.ajax({
                 type: 'POST',
-                url: '{% url "card:card_update" %}',
+                url: '{% url "cart:cart_update" %}',
                 data: {
                     productid: $(this).data('index'),
                     productqty: $('#select' + prodid + ' option:selected').text(),
@@ -141,7 +141,7 @@
                     action: 'post'
                 },
                 success: function (json) {
-                    document.getElementById("card-qty").innerHTML = json.qty
+                    document.getElementById("cart-qty").innerHTML = json.qty
                     document.getElementById("subtotal").innerHTML = json.subtotal
                 },
                 error: function (xhr, errmsg, err) {
